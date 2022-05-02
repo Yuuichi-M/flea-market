@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Post } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post } from '@nestjs/common';
 import { ItemStatus } from './item-status.enum';
 import { Item } from './item.model';
 import { ItemsService } from './items.service';
@@ -11,6 +11,13 @@ export class ItemsController {
   @Get()
   findAll(): Item[] {
     return this.itemsService.findAll();
+  }
+
+  @Get(':id') //コロン(:)を前につけることで可変のパラメーターとして定義できる
+  //パラメーター取得の為@Paramデコレーターを使用
+  findById(@Param('id') id: string): Item {
+    //ServiceのメソッドにIDを渡す
+    return this.itemsService.findById(id);
   }
 
   //createメソッドを定義
