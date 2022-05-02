@@ -11,6 +11,13 @@ export class ItemsService {
     return this.items;
   }
 
+  //idで商品を検索する(findById)
+  findById(id: string): Item {
+    //配列から特定のキーで中身を検索するためfindメソッドを使用
+    //itemのidと、指定されたidが等しい場合、Itemがリターンされる
+    return this.items.find((item) => item.id === id);
+  }
+
   //createメソッドを定義
   create(item: Item): Item {
     //Controllerから受け取ったitemを配列に格納
