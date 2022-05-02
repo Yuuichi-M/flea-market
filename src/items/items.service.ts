@@ -6,8 +6,9 @@ export class ItemsService {
   //privateで配列でitems変数を作成(初期値は空)
   private items: Item[] = [];
 
-  findAll() {
-    return 'This is ItemsService';
+  //Itemを配列に格納 戻り地をItemに設定
+  findAll(): Item[] {
+    return this.items;
   }
 
   //createメソッドを定義
