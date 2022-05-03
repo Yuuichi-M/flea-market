@@ -1,5 +1,5 @@
 import { Body, Controller, Delete, Get, Param, Patch, Post } from '@nestjs/common';
-import { ItemStatus } from './item-status.enum';
+import { CreateItemDto } from './dto/create-item.dto';
 import { Item } from './item.model';
 import { ItemsService } from './items.service';
 
@@ -22,25 +22,11 @@ export class ItemsController {
 
   //createメソッドを定義
   @Post()
-  //戻り値の型はItem リクエストBody
-  create(
-    @Body('id') id: string,
-    @Body('name') name: string,
-    @Body('price') price: number,
-    @Body('description') description: string,
-  ): Item {
-    //itemオブジェクトを作成
-    const item: Item = {
-      id,
-      name,
-      price,
-      description,
-      status: ItemStatus.ON_SALE,
-    };
-
+  //DTOを変数で定義
+  create(@Body() CreateItemDto: CreateItemDto): Item {
     //ServiceクラスのCreateメソッドを呼び出す
-    //itemオブジェクトをServiceクラスのcreateメソッドに渡す
-    return this.itemsService.create(item);
+    //createItemDtoをServiceにわたす
+    return this.itemsService.create(createItemDto);
   }
   //updateなのでpatchを利用
   @Patch(':id')
