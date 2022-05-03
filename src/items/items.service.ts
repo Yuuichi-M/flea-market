@@ -1,4 +1,5 @@
 import { Injectable } from '@nestjs/common';
+import { threadId } from 'worker_threads';
 import { ItemStatus } from './item-status.enum';
 import { Item } from './item.model';
 
@@ -34,5 +35,12 @@ export class ItemsService {
     //ItemのステータスをSOLD.OUTに変更
     item.status = ItemStatus.SOLD_OUT;
     return item;
+  }
+
+  //deleteメソッド定義
+  //戻り値はvoid
+  delete(id: string): void {
+    //特定のid以外のitemを配列に残す
+    this.items = this.items.filter((item) => item.id !== id);
   }
 }
