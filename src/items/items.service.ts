@@ -1,4 +1,5 @@
 import { Injectable } from '@nestjs/common';
+import { ItemStatus } from './item-status.enum';
 import { Item } from './item.model';
 
 @Injectable()
@@ -23,6 +24,15 @@ export class ItemsService {
     //Controllerから受け取ったitemを配列に格納
     this.items.push(item);
     //格納したItemを返す
+    return item;
+  }
+
+  //商品が売れた場合、ステータスを更新する
+  updateStatus(id: string): Item {
+    //特定のIDを持つ商品を取得(findById)
+    const item = this.findById(id);
+    //ItemのステータスをSOLD.OUTに変更
+    item.status = ItemStatus.SOLD_OUT;
     return item;
   }
 }
