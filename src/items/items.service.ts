@@ -1,5 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { threadId } from 'worker_threads';
+import { CreateItemDto } from './dto/create-item.dto';
 import { ItemStatus } from './item-status.enum';
 import { Item } from './item.model';
 
@@ -20,9 +21,13 @@ export class ItemsService {
     return this.items.find((item) => item.id === id);
   }
 
-  //createメソッドを定義
-  create(item: Item): Item {
-    //Controllerから受け取ったitemを配列に格納
+  //createメソッドをDTOで定義
+  create(createItemDto: CreateItemDto): Item {
+    const item: Item = {
+      ...createItemDto,
+      status: ItemStatus.ON_SALE,
+    }
+    //Controllerから受けったitemを配列に格納
     this.items.push(item);
     //格納したItemを返す
     return item;
