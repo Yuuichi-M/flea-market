@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Param, Post } from '@nestjs/common';
+import { Body, Controller, Get, Param, Patch, Post } from '@nestjs/common';
 import { ItemStatus } from './item-status.enum';
 import { Item } from './item.model';
 import { ItemsService } from './items.service';
@@ -41,5 +41,10 @@ export class ItemsController {
     //ServiceクラスのCreateメソッドを呼び出す
     //itemオブジェクトをServiceクラスのcreateメソッドに渡す
     return this.itemsService.create(item);
+  }
+  //updateなのでpatchを利用
+  @Patch(':id')
+  updateStatus(@Param('id') id: string): Item {
+    return this.itemsService.updateStatus(id);
   }
 }
