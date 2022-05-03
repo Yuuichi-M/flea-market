@@ -21,7 +21,7 @@ export class ItemsController {
     return this.itemsService.findById(id);
   }
 
-  //createメソッドを定義
+  //create
   @Post()
   //DTOを変数で定義
   create(@Body() createItemDto: CreateItemDto): Item {
@@ -29,13 +29,13 @@ export class ItemsController {
     //createItemDtoをServiceにわたす
     return this.itemsService.create(createItemDto);
   }
-  //updateなのでpatchを利用
+  //updateStatus
   @Patch(':id')
   updateStatus(@Param('id', ParseUUIDPipe) id: string): Item {
     return this.itemsService.updateStatus(id);
   }
 
-  //deleteメソッド
+  //delete
   @Delete(':id')
   delete(@Param('id', ParseUUIDPipe) id: string): void {
     //取得したidをServiceに渡す
