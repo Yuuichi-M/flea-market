@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { threadId } from 'worker_threads';
 import { CreateItemDto } from './dto/create-item.dto';
 import { ItemStatus } from './item-status.enum';
@@ -18,8 +18,13 @@ export class ItemsService {
   //idで商品を検索する(findById)
   findById(id: string): Item {
     //配列から特定のキーで中身を検索するためfindメソッドを使用
+    const found = this.items.find((item) => item.id === id);
+    //商品が見つからなかったら、例外処理を実行
+    if (!found) {
+      throw new NotFoundException();
+    }
     //itemのidと、指定されたidが等しい場合、Itemがリターンされる
-    return this.items.find((item) => item.id === id);
+    return found;
   }
 
   //createメソッドをDTOで定義
