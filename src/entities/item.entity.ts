@@ -1,8 +1,8 @@
 import { ItemStatus } from "src/items/item-status.enum";
 import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
 
-//このEntitiyを利用してデータベースにテーブルを作成する準備
-//entitiyとして動作させる
+//このEntityを利用してデータベースにテーブルを作成する準備
+//entityとして動作させる
 @Entity()
 export class Item {
   //自動採番カラムとして表す
