@@ -5,7 +5,7 @@ import { TypeOrmModule } from '@nestjs/typeorm'; //typeOrmModuleをインポー�
 @Module({
   imports: [
     ItemsModule,
-    //TypeOrmの環境設定
+    //TypeOrm設定
     TypeOrmModule.forRoot({
       type: 'postgres',
       host: 'localhost',
