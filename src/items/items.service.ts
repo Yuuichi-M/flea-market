@@ -2,11 +2,13 @@ import { Injectable, NotFoundException } from '@nestjs/common';
 import { threadId } from 'worker_threads';
 import { CreateItemDto } from './dto/create-item.dto';
 import { ItemStatus } from './item-status.enum';
-import { Item } from './item.model';
-import { v4 as uuid } from 'uuid';
+import { Item } from '../entities/item.entity';
+import { ItemRepository } from './item.repository';
 
 @Injectable()
 export class ItemsService {
+  constructor(private readonly itemRepository: ItemRepository) { }
+
   //privateで配列でitems変数を作成(初期値は空)
   private items: Item[] = [];
 
@@ -28,17 +30,8 @@ export class ItemsService {
   }
 
   //createメソッドをDTOで定義
-  create(createItemDto: CreateItemDto): Item {
-    const item: Item = {
-      //uuidが自動採番される
-      id: uuid(),
-      ...createItemDto,
-      status: ItemStatus.ON_SALE,
-    }
-    //Controllerから受けったitemを配列に格納
-    this.items.push(item);
-    //格納したItemを返す
-    return item;
+  async create(createItemDto: CreateItemDto): Promise<Item> {
+    return await this.itemRepository.createItem(createItemDto);
   }
 
   //商品が売れた場合、ステータスを更新する
