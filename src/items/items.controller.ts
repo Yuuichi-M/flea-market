@@ -22,16 +22,16 @@ export class ItemsController {
   async create(@Body() createItemDto: CreateItemDto): Promise<Item> {
     return await this.itemsService.create(createItemDto);
   }
-  // //updateStatus
-  // @Patch(':id')
-  // updateStatus(@Param('id', ParseUUIDPipe) id: string): Item {
-  //   return this.itemsService.updateStatus(id);
-  // }
+
+  //updateStatus
+  @Patch(':id')
+  async updateStatus(@Param('id', ParseUUIDPipe) id: string): Promise<Item> {
+    return await this.itemsService.updateStatus(id);
+  }
 
   //delete
   @Delete(':id')
-  delete(@Param('id', ParseUUIDPipe) id: string): void {
-    //取得したidをServiceに渡す
-    this.itemsService.delete(id);
+  async delete(@Param('id', ParseUUIDPipe) id: string): Promise<void> {
+    await this.itemsService.delete(id);
   }
 }
