@@ -31,19 +31,18 @@ export class ItemsService {
     return await this.itemRepository.createItem(createItemDto);
   }
 
-  // //商品が売れた場合、ステータスを更新する
-  // updateStatus(id: string): Item {
-  //   //特定のIDを持つ商品を取得(findById)
-  //   const item = this.findById(id);
-  //   //ItemのステータスをSOLD.OUTに変更
-  //   item.status = ItemStatus.SOLD_OUT;
-  //   return item;
-  // }
+  //商品が売れた場合、ステータスを更新する
+  async updateStatus(id: string): Promise<Item> {
+    const item = await this.findById(id);
+    item.status = ItemStatus.SOLD_OUT;
+    item.updatedAt = new Date().toISOString();
+    await this.itemRepository.save(item);
+    return item;
+  }
 
   //deleteメソッド定義
   //戻り値はvoid
-  delete(id: string): void {
-    //特定のid以外のitemを配列に残す
-    this.items = this.items.filter((item) => item.id !== id);
+  async delete(id: string): Promise<void> {
+    await this.itemRepository.delete({ id });
   }
 }
