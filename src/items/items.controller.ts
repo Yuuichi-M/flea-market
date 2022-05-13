@@ -9,27 +9,24 @@ export class ItemsController {
   constructor(private readonly itemsService: ItemsService) { }
 
   @Get()
-  findAll(): Item[] {
-    return this.itemsService.findAll();
+  async findAll(): Promise<Item[]> {
+    return await this.itemsService.findAll();
   }
 
-  @Get(':id') //コロン(:)を前につけることで可変のパラメーターとして定義できる
-  //パラメーター取得の為@Paramデコレーターを使用
-  //parseuuidパイプを渡す
-  findById(@Param('id', ParseUUIDPipe) id: string): Item {
-    //ServiceのメソッドにIDを渡す
-    return this.itemsService.findById(id);
+  @Get(':id')
+  async findById(@Param('id', ParseUUIDPipe) id: string): Promise<Item> {
+    return await this.itemsService.findById(id);
   }
 
   @Post()
   async create(@Body() createItemDto: CreateItemDto): Promise<Item> {
     return await this.itemsService.create(createItemDto);
   }
-  //updateStatus
-  @Patch(':id')
-  updateStatus(@Param('id', ParseUUIDPipe) id: string): Item {
-    return this.itemsService.updateStatus(id);
-  }
+  // //updateStatus
+  // @Patch(':id')
+  // updateStatus(@Param('id', ParseUUIDPipe) id: string): Item {
+  //   return this.itemsService.updateStatus(id);
+  // }
 
   //delete
   @Delete(':id')
