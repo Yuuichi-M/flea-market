@@ -12,20 +12,17 @@ export class ItemsService {
   //privateで配列でitems変数を作成(初期値は空)
   private items: Item[] = [];
 
-  //Itemを配列に格納 戻り地をItemに設定
-  findAll(): Item[] {
-    return this.items;
+  //Itemを配列に格納
+  async findAll(): Promise<Item[]> {
+    return await this.itemRepository.find();
   }
 
   //idで商品を検索する(findById)
-  findById(id: string): Item {
-    //配列から特定のキーで中身を検索するためfindメソッドを使用
-    const found = this.items.find((item) => item.id === id);
-    //商品が見つからなかったら、例外処理を実行
+  async findById(id: string): Promise<Item> {
+    const found = await this.itemRepository.findOne(id);
     if (!found) {
       throw new NotFoundException();
     }
-    //itemのidと、指定されたidが等しい場合、Itemがリターンされる
     return found;
   }
 
@@ -34,14 +31,14 @@ export class ItemsService {
     return await this.itemRepository.createItem(createItemDto);
   }
 
-  //商品が売れた場合、ステータスを更新する
-  updateStatus(id: string): Item {
-    //特定のIDを持つ商品を取得(findById)
-    const item = this.findById(id);
-    //ItemのステータスをSOLD.OUTに変更
-    item.status = ItemStatus.SOLD_OUT;
-    return item;
-  }
+  // //商品が売れた場合、ステータスを更新する
+  // updateStatus(id: string): Item {
+  //   //特定のIDを持つ商品を取得(findById)
+  //   const item = this.findById(id);
+  //   //ItemのステータスをSOLD.OUTに変更
+  //   item.status = ItemStatus.SOLD_OUT;
+  //   return item;
+  // }
 
   //deleteメソッド定義
   //戻り値はvoid
